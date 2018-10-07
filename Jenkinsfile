@@ -20,8 +20,7 @@ pipeline {
      bat(/"${mvnHome}\bin\mvn"  clean package/)
                         def pom = readMavenPom file: 'pom.xml'
                         print pom.version
-                        junit '**//*target/surefire-reports/TEST-*.xml'
-                        archive 'target*//*.jar'
+                        
                     }
                 }
 

@@ -4,13 +4,9 @@ pipeline {
     // global env variables
     environment {
         EMAIL_RECIPIENTS = 'kumarstaffings@gmail.com'
-    }
-    
-    environment {
-        //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
-        IMAGE = readMavenPom().getArtifactId()
         VERSION = readMavenPom().getVersion()
     }
+    
     stages {
 
         stage('Build with unit testing') {

@@ -4,7 +4,7 @@ pipeline {
     // global env variables
     environment {
         EMAIL_RECIPIENTS = 'kumarstaffings@gmail.com'
-        VERSION = readMavenPom().getVersion()
+        
     }
     
     stages {
@@ -21,7 +21,9 @@ pipeline {
 
                    
      bat(/"${mvnHome}\bin\mvn"  clean package/)
-                    print "${VERSION}"
+        
+                    writeMavenPom model: pom, file: "pom.xml"
+                    
                     }
                 }
 

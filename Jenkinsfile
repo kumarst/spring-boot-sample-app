@@ -19,7 +19,7 @@ pipeline {
 
                    
      bat(/"${mvnHome}\bin\mvn"  clean package/)
-                        
+                     def pom = readMavenPom file: 'pom.xml'   
                     }
                 }
 

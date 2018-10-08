@@ -1,5 +1,4 @@
 import jenkins.model.*
-jenkins = Jenkins.instance
 
 pipeline {
     // run on jenkins nodes tha has java 8 label
@@ -7,9 +6,7 @@ pipeline {
     // global env variables
     environment {
         EMAIL_RECIPIENTS = 'kumarstaffings@gmail.com'
-        
     }
-    
     stages {
 
         stage('Build with unit testing') {
@@ -20,16 +17,17 @@ pipeline {
                     // ** NOTE: This 'M3' Maven tool must be configured
                     // **       in the global configuration.
                     echo 'Pulling...' + env.BRANCH_NAME
-                    def mvnHome = tool 'MAVEN 323'
-
+                    def mvnHome = tool name: 'Maven', type: 'maven'
                    
-     bat(/"${mvnHome}\bin\mvn"  clean package/)
-        
-                    writeMavenPom model: pom, file: "pom.xml"
-                    
+     bat(/"${mvnHome}\bin\mvn" -Dintegration-tests.skip=true clean package/)
+                        def pom = readMavenPom file: 'pom.xml'
+                        print pom.version
+                        junit '**//*target/surefire-reports/TEST-*.xml'
+                        archive 'target*//*.jar'
                     }
                 }
 
             }
         }
 }
+

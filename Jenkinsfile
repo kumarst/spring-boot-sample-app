@@ -20,8 +20,14 @@ pipeline {
                     def mvnHome = tool name: 'Maven', type: 'maven'
                    
      bat(/"${mvnHome}\bin\mvn" -Dintegration-tests.skip=true clean package/)
-                        def pom = readMavenPom file: 'pom.xml'
-                        print pom.version
+                         void defineVersion() {
+sh "git rev-parse HEAD > .git/commit-id"
+commitId = readFile('.git/commit-id')
+timestamp =  getCurrentTimestamp()
+version = timestamp+'-'+commitId
+ print "${version}"                            
+}
+                    
                         junit '**//*target/surefire-reports/TEST-*.xml'
                         archive 'target*//*.jar'
                     }

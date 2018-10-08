@@ -21,14 +21,7 @@ pipeline {
                    
      bat(/"${mvnHome}\bin\mvn" -Dintegration-tests.skip=true clean package/)
                        
-                    void defineVersion() {
- git rev-parse HEAD > .git/commit-id"
-commitId = readFile('.git/commit-id')
-timestamp =  getCurrentTimestamp()
-version = timestamp+'-'+commitId
-                             
-}
-                    
+                                      
                         junit '**//*target/surefire-reports/TEST-*.xml'
                         archive 'target*//*.jar'
                     }

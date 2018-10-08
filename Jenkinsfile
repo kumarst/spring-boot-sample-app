@@ -46,8 +46,7 @@ pipeline {
                     }
 
                 }
-                // cucumber reports collection
-                cucumber buildStatus: null, fileIncludePattern: '**/cucumber.json', jsonReportDirectory: 'target', sortingMethod: 'ALPHABETICAL'
+                
             }
         }
         stage('Sonar scan execution') {
@@ -138,7 +137,7 @@ pipeline {
                             echo "Building version ${v} - so released version is ${releasedVersion}"
                         }
                         // jenkins user credentials ID which is transparent to the user and password change
-                        sshagent(['0000000-3b5a-454e-a8e6-c6b6114d36000']) {
+                        sshagent(['kid1']) {
                             sh "git tag -f v${v}"
                             sh "git push -f --tags"
                         }

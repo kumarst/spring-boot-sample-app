@@ -56,7 +56,7 @@ pipeline {
                     def mvnHome = tool name: 'Maven', type: 'maven'
                     withSonarQubeEnv {
 
-                        sh "'${mvnHome}/bin/mvn'  verify sonar:sonar -Dintegration-tests.skip=true -Dmaven.test.failure.ignore=true"
+                        bat(/"'${mvnHome}/bin/mvn'  verify sonar:sonar -Dintegration-tests.skip=true -Dmaven.test.failure.ignore=true"/)
                     }
                 }
             }
